@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>GB-css3-wheel</title>
+    <link rel="stylesheet" href="css/typo/typo.css">
+    <link rel="stylesheet" href="css/GB-css3-wheel.css">
+    <link rel="stylesheet" href="http://icono-49d6.kxcdn.com/icono.min.css">
+    <style>
+    	.wrapper{
+    		padding:20px 40px;
+    	}
+    	.fork-github{
+    		position: fixed;
+    		right: -100px;
+    		top: 45px;
+    		z-index: 9999;
+    		padding: 2px 100px;
+    		font-size: 12px;
+    		background-color: #444;
+    		border: 1px solid #000;
+    		-webkit-transform: rotate(45deg);
+    			-ms-transform: rotate(45deg);
+    				transform: rotate(45deg);
+    		text-align: center;
+    	}
+    	.fork-github a{
+    		color: #fff;
+    	}
+
+    </style>
+  </head>
+  <body ontouchstart>
+    
+	
+	
+
+	<div class="wrapper typo" id="wrapper">
+		
+		<h1>GB-css3-wheel</h1>
+
+		<h2>DEMO</h2>
+
+
+    <section class="gb-wheel-container" id="gbWheel">
+        <div class="gb-wheel-content gb-wheel-run">
+            <ul class="gb-wheel-line">
+                <li class="gb-wheel-litem" style="transform: rotate(0.08333333333333333turn)"></li>
+                <li class="gb-wheel-litem" style="transform: rotate(0.25turn)"></li>
+                <li class="gb-wheel-litem" style="transform: rotate(0.41666666666666663turn)"></li>
+                <li class="gb-wheel-litem" style="transform: rotate(0.5833333333333334turn)"></li>
+                <li class="gb-wheel-litem" style="transform: rotate(0.75turn)"></li>
+                <li class="gb-wheel-litem" style="transform: rotate(0.9166666666666666turn)"></li>
+            </ul>
+
+            <div class="gb-wheel-list">
+                <div class="gb-wheel-item">
+                    <p class="gb-wheel-icontent" style="transform: rotate(0turn)">0</p>
+                </div>
+                <div class="gb-wheel-item">
+                    <p class="gb-wheel-icontent" style="transform: rotate(0.16666666666666666turn)">1</p>
+                </div>
+                <div class="gb-wheel-item">
+                    <p class="gb-wheel-icontent" style="transform: rotate(0.3333333333333333turn)">2</p>
+                </div>
+                <div class="gb-wheel-item">
+                    <p class="gb-wheel-icontent" style="transform: rotate(0.5turn)">3</p>
+                </div>
+                <div class="gb-wheel-item">
+                    <p class="gb-wheel-icontent" style="transform: rotate(0.6666666666666666turn)">4</p>
+                </div>
+                <div class="gb-wheel-item">
+                    <p class="gb-wheel-icontent" style="transform: rotate(0.8333333333333333turn)">5</p>
+                </div>
+            </div>
+        </div>
+        <a href="javascript:;" class="gb-wheel-btn" id="gbLottery">抽奖</a>     
+    </section>
+
+
+
+	</div>
+	
+	<div class="fork-github">
+		<a href="https://github.com/givebest/GB-css3-wheel">Fork me on Github</a>
+	</div>
+
+
+    <script>
+        (function() {
+
+            // 奖品配置
+            var awards = [
+                    {'index': 0, 'text': '耳机' , 'name': 'icono-headphone'},
+                    {'index': 1, 'text': 'iPhone' , 'name': 'icono-iphone'},
+                    {'index': 2, 'text': '相机' , 'name': 'icono-camera'},
+                    {'index': 3, 'text': '咖啡杯' , 'name': 'icono-cup'},
+                    {'index': 4, 'text': '日历', 'name': 'icono-calendar'},
+                    {'index': 5, 'text': '键盘', 'name': 'icono-keyboard'}
+                ],
+                len = awards.length,
+                turnNum = 1 / len;  // 文字旋转 turn 值
+
+            var gbWheel = $('gbWheel'),
+                lineList = gbWheel.querySelector('ul.gb-wheel-line'),
+                itemList = gbWheel.querySelector('.gb-wheel-list'),
+                lineListHtml = [],
+                itemListHtml = [];
+
+            var transform = preTransform();
+
+            awards.forEach(function(v, i, a) {
+                // 分隔线
+                lineListHtml.push('<li class="gb-wheel-litem" style="' + transform + ': rotate('+ (i * turnNum + turnNum / 2) +'turn)"></li>');
+
+                // 奖项
+                itemListHtml.push('<div class="gb-wheel-item">');
+                itemListHtml.push('<div class="gb-wheel-icontent" style="' + transform + ': rotate('+ (i * turnNum) +'turn)">');
+                itemListHtml.push('<p class="gb-wheel-iicon">');
+                itemListHtml.push('<i class="'+v.name+'"></i>');
+                itemListHtml.push('</p>');
+                itemListHtml.push('<p class="gb-wheel-itext">');
+                itemListHtml.push(v.text);
+                itemListHtml.push('</p>');
+                itemListHtml.push('</div>');
+                itemListHtml.push('</div>');
+            });           
+
+            lineList.innerHTML = lineListHtml.join('');
+            itemList.innerHTML = itemListHtml.join('');
+
+            function $(id) {
+                return document.getElementById(id);
+            };
+
+
+            // 旋转
+            var i = 0;
+            $('gbLottery').onclick = function() {
+                i++;
+                gbWheel.querySelector('.gb-wheel-content').style = transform + ': rotate('+ i * 3600 +'deg)';  
+            }
+
+            // console.log(preTransform());
+
+            // transform兼容
+            function preTransform() {
+                var cssPrefix,
+                vendors = {
+                  '': '',
+                  Webkit: 'webkit',
+                  Moz: '',
+                  O: 'o',
+                  ms: 'ms'
+                },
+                testEle = document.createElement('p'),
+                cssSupport = {};
+
+                 // 嗅探特性
+                Object.keys(vendors).some(function(vendor) {
+                    if (testEle.style[vendor + (vendor ? 'T' : 't') + 'ransform'] !== undefined) {
+                      cssPrefix = vendor ? '-' + vendor.toLowerCase() + '-' : '';
+                      return true;
+                    }
+                });
+
+              /**
+               * [兼容CSS前缀]
+               * @param  {[type]} name [description]
+               * @return {[type]}      [description]
+               */
+              function normalizeCss(name) {
+                name = name.toLowerCase();
+                return cssPrefix ? cssPrefix + name : name;
+              }
+
+              cssSupport = {
+                transform: normalizeCss('Transform'),
+              }
+
+              return cssSupport.transform;
+            }
+
+        }());
+
+    </script>
+  </body>
+</html>

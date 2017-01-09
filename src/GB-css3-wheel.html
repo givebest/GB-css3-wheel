@@ -141,7 +141,7 @@
             var i = 0;
             $('gbLottery').onclick = function() {
                 i++;
-                gbWheel.querySelector('.gb-wheel-content').style = transform + ': rotate('+ i * 3600 +'deg)';  
+                gbWheel.querySelector('.gb-wheel-content').style[transform] =  'rotate('+ i * 3600 +'deg)';  
             }
 
             // console.log(preTransform());

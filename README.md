@@ -35,6 +35,6 @@ CSS3转盘背景来自：[http://lea.verou.me/css3patterns/](http://lea.verou.me
 
 ## License
 
-[MIT](./LICENSE) © 2017 [givebest](https://github.com/givebest)
+[GPL-3.0](./LICENSE) © 2017 [givebest](https://github.com/givebest)
 
  
